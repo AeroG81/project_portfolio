@@ -1,10 +1,10 @@
 import Navbar from './components/Navbar'
 import ParticleBackground from './components/ParticleBackground'
 import TechGridBackground from './components/TechGridBackground'
-import GlowOrbs from './components/GlowOrbs'
 import Hero from './sections/Hero'
 import About from './sections/About'
-import Projects from './sections/Projects'
+import Experience from './sections/Experience'
+// import Projects from './sections/Projects'
 import Skills from './sections/Skills'
 import Contact from './sections/Contact'
 import Footer from './components/Footer'
@@ -12,19 +12,17 @@ import ScrollProgress from './components/ScrollProgress'
 
 function App() {
   return (
-    <div className="relative min-h-screen bg-background font-sans">
-      {/* Layered backgrounds: grid → orbs → particles (front) */}
+    <div className="relative min-h-screen font-sans">
       <TechGridBackground />
-      <GlowOrbs />
       <ParticleBackground />
-      {/* Subtle scanline overlay */}
-      <div className="pointer-events-none fixed inset-0 z-[1] bg-scanlines opacity-[0.03]" aria-hidden="true" />
+      <div className="pointer-events-none fixed inset-0 z-1 bg-scanlines opacity-[0.01]" aria-hidden="true" />
       <ScrollProgress />
       <Navbar />
-      <main className="relative z-[2]">
+      <main className="relative z-2">
         <Hero />
         <About />
-        <Projects />
+        <Experience />
+        {/* <Projects /> */}
         <Skills />
         <Contact />
       </main>

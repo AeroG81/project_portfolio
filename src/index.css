@@ -1,23 +1,77 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap');
+@import "tailwindcss";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* ─── Geist Font Family ─── */
+@font-face {
+  font-family: 'Geist Sans';
+  src: url('../node_modules/geist/dist/fonts/geist-sans/Geist-Variable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('../node_modules/geist/dist/fonts/geist-mono/GeistMono-Variable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Geist Pixel';
+  src: url('../node_modules/geist/dist/fonts/geist-pixel/GeistPixel-Line.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --font-sans: 'Geist Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, 'SF Mono', monospace;
+  --font-pixel: 'Geist Pixel', monospace;
+
+  --color-background: oklch(0.13 0.012 50);
+  --color-surface: oklch(0.17 0.01 50);
+  --color-surface-light: oklch(0.22 0.01 50);
+  --color-accent: oklch(0.65 0.25 40);
+  --color-accent-dim: oklch(0.55 0.2 40);
+  --color-accent-glow: oklch(0.65 0.25 40 / 0.15);
+  --color-secondary: oklch(0.72 0.08 80);
+  --color-secondary-dim: oklch(0.6 0.06 80);
+
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --animate-float: float 6s cubic-bezier(0.25, 1, 0.5, 1) infinite;
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+}
 
 @layer base {
   html {
     scroll-behavior: smooth;
-    font-family: 'Space Grotesk', system-ui, sans-serif;
   }
 
   body {
-    background: oklch(0.15 0.01 200);
-    color: oklch(0.85 0.01 200);
+    font-family: var(--font-sans);
+    background: var(--color-background);
+    color: oklch(0.82 0.015 50);
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   ::-webkit-scrollbar {
-    width: 6px;
+    width: 5px;
   }
 
   ::-webkit-scrollbar-track {
@@ -25,40 +79,42 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: oklch(0.65 0.25 40 / 0.3);
+    background: oklch(0.65 0.25 40 / 0.25);
     border-radius: 3px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: oklch(0.65 0.25 40 / 0.6);
+    background: oklch(0.65 0.25 40 / 0.5);
   }
 
   ::selection {
-    background: oklch(0.65 0.25 40 / 0.3);
-    color: oklch(0.95 0.1 40);
+    background: oklch(0.65 0.25 40 / 0.25);
+    color: oklch(0.95 0.08 40);
   }
 }
 
 @layer utilities {
   .text-gradient {
-    /* No generic slop gradients, bold solid color instead, or subtle shift */
-    @apply text-accent;
-  }
-
-  .glow-border {
-    box-shadow: 0 0 15px oklch(0.65 0.25 40 / 0.1), inset 0 0 15px oklch(0.65 0.25 40 / 0.05);
-    border: 1px solid oklch(0.65 0.25 40 / 0.2);
+    color: var(--color-accent);
+    font-family: var(--font-pixel);
+    letter-spacing: 0.01rem;
   }
 
   .glow-text {
-    text-shadow: 0 0 20px oklch(0.65 0.25 40 / 0.4);
+    text-shadow:
+      0 0 40px oklch(0.65 0.25 40 / 0.5),
+      0 0 12px oklch(0.65 0.25 40 / 0.3);
   }
 
-  .glass {
-    background: oklch(0.20 0.01 200 / 0.7);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid oklch(0.65 0.25 40 / 0.1);
+  .bg-scanlines {
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.12) 2px,
+      rgba(0, 0, 0, 0.12) 4px
+    );
+    background-size: 100% 4px;
   }
 }
 
@@ -68,18 +124,5 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
-  }
-}
-
-@layer utilities {
-  .bg-scanlines {
-    background: repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      rgba(0, 0, 0, 0.15) 2px,
-      rgba(0, 0, 0, 0.15) 4px
-    );
-    background-size: 100% 4px;
   }
 }

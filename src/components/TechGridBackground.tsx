@@ -20,13 +20,12 @@ export default function TechGridBackground() {
     let height = 0;
 
     // --- grid settings ---
-    const CELL = 60; // px between grid lines
-    const LINE_ALPHA = 0.04;
+    const CELL = 50; // px between grid lines - slightly denser
+    const LINE_ALPHA = 0.05;
     const NODE_RADIUS = 1.5;
-    const NODE_ALPHA = 0.25;
-    const PULSE_COUNT = 18;
-    const PULSE_SPEED = 0.6; // px per frame
-    const PULSE_LENGTH = 90;
+    const NODE_ALPHA = 0.3;
+    const PULSE_COUNT = 45; // Increased pulses
+    const MAX_PULSE_LENGTH = 150;
 
     // Persistent data-flow pulses
     interface Pulse {
@@ -34,13 +33,16 @@ export default function TechGridBackground() {
       y: number;
       dx: number;
       dy: number;
-      progress: number; // 0 → PULSE_LENGTH
+      progress: number;
       color: string;
+      speed: number;
+      length: number;
     }
 
     const pulses: Pulse[] = [];
-
-    const COLORS = ["#ff4500", "#ffae42", "#d9534f", "#888888"];
+    
+    // Richer tech color palette
+    const COLORS = ["#ff4500", "#ffae42", "#d9534f", "#888888", "#0ea5e9", "#10b981"];
 
     function spawnPulse() {
       // start at a random grid intersection
@@ -56,6 +58,8 @@ export default function TechGridBackground() {
         dy: horizontal ? 0 : dir,
         progress: 0,
         color: COLORS[Math.floor(Math.random() * COLORS.length)],
+        speed: 0.4 + Math.random() * 0.8, // 0.4 to 1.2 px/frame
+        length: 40 + Math.random() * MAX_PULSE_LENGTH,
       });
     }
 
@@ -101,10 +105,10 @@ export default function TechGridBackground() {
       // --- draw data-flow pulses ---
       for (let i = pulses.length - 1; i >= 0; i--) {
         const p = pulses[i];
-        const headX = p.x + p.dx * p.progress * PULSE_SPEED;
-        const headY = p.y + p.dy * p.progress * PULSE_SPEED;
-        const tailX = p.x + p.dx * Math.max(0, p.progress - PULSE_LENGTH) * PULSE_SPEED;
-        const tailY = p.y + p.dy * Math.max(0, p.progress - PULSE_LENGTH) * PULSE_SPEED;
+        const headX = p.x + p.dx * p.progress * p.speed;
+        const headY = p.y + p.dy * p.progress * p.speed;
+        const tailX = p.x + p.dx * Math.max(0, p.progress - p.length) * p.speed;
+        const tailY = p.y + p.dy * Math.max(0, p.progress - p.length) * p.speed;
 
         const grad = ctx!.createLinearGradient(tailX, tailY, headX, headY);
         grad.addColorStop(0, `${p.color}00`);

@@ -1,45 +1,39 @@
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence, useScroll, useTransform, useMotionTemplate } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
 const navLinks = [
   { label: "Home", href: "#home" },
   { label: "About", href: "#about" },
-  { label: "Projects", href: "#projects" },
+  { label: "Experience", href: "#experience" },
+  // { label: "Projects", href: "#projects" },
   { label: "Skills", href: "#skills" },
   { label: "Contact", href: "#contact" },
 ];
 
 export default function Navbar() {
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const { scrollY } = useScroll();
 
-  useEffect(() => {
-    const onScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  // Smoothly interpolate background opacity from 0 → 0.75 over the first 120px of scroll
+  const bgOpacity = useTransform(scrollY, [0, 120], [0, 0.75]);
+  const borderOpacity = useTransform(scrollY, [0, 120], [0, 0.05]);
+  const backgroundColor = useMotionTemplate`oklch(0.13 0.012 50 / ${bgOpacity})`;
+  const borderColor = useMotionTemplate`oklch(1 0 0 / ${borderOpacity})`;
 
   return (
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? "glass shadow-lg shadow-black/20"
-          : "bg-transparent"
-      }`}
+      style={{ backgroundColor, borderColor, backdropFilter: "blur(0px)" }}
+      className="fixed top-0 left-0 right-0 z-50 border-b backdrop-blur-xl"
     >
       <div className="mx-auto max-w-6xl px-6 py-4 flex items-center justify-between">
         {/* Logo */}
         <a href="#home" className="group flex items-center gap-2">
-          <div className="relative flex h-10 w-10 items-center justify-center rounded-lg bg-accent/10 border border-accent/30 group-hover:border-accent/60 transition-colors">
-            <span className="text-xl font-bold text-accent glow-text">A</span>
-            <div className="absolute inset-0 rounded-lg bg-accent/5 group-hover:bg-accent/10 transition-colors" />
-          </div>
-          <span className="text-lg font-semibold text-white">
-            Aero<span className="text-accent">G</span>
+          <span className="font-mono text-lg font-bold text-white tracking-tight">
+            Aero<span className="text-accent ml-0.5">G</span>
           </span>
         </a>
 
@@ -86,7 +80,7 @@ export default function Navbar() {
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            className="md:hidden glass overflow-hidden"
+            className="md:hidden bg-background/95 backdrop-blur-xl border-b border-white/5 overflow-hidden"
           >
             <ul className="flex flex-col items-center gap-4 py-6">
               {navLinks.map((link) => (

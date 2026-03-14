@@ -59,7 +59,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       <motion.div
         whileHover={{ y: -8, scale: 1.01 }}
         transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-        className={`group relative overflow-hidden border border-surface-light bg-surface transition-all duration-500 hover:border-accent/80 hover:shadow-[0_0_30px_rgba(255,69,0,0.15)] ${
+        className={`group relative overflow-hidden border border-white/5 bg-surface transition-all duration-500 hover:border-accent/40 ${
           project.featured ? "md:col-span-2" : ""
         }`}
       >
@@ -78,7 +78,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
                 href={project.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-9 w-9 items-center justify-center rounded-full bg-background/80 border border-white/10 text-white hover:border-accent/50 hover:text-accent transition-colors"
+                className="flex h-9 w-9 items-center justify-center bg-background/80 border border-white/10 text-white hover:border-accent/50 hover:text-accent transition-colors"
               >
                 <Github size={16} />
               </a>
@@ -88,7 +88,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
                 href={project.live}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-9 w-9 items-center justify-center rounded-full bg-background/80 border border-white/10 text-white hover:border-accent/50 hover:text-accent transition-colors"
+                className="flex h-9 w-9 items-center justify-center bg-background/80 border border-white/10 text-white hover:border-accent/50 hover:text-accent transition-colors"
               >
                 <ExternalLink size={16} />
               </a>
@@ -97,7 +97,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
 
           {project.featured && (
             <div className="absolute top-4 left-4">
-              <span className="rounded-full bg-accent/20 border border-accent/40 px-3 py-1 text-xs font-medium text-accent">
+              <span className="bg-accent/15 border border-accent/30 px-3 py-1 text-xs font-mono text-accent">
                 Featured
               </span>
             </div>
@@ -122,7 +122,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
             {project.tags.map((tag) => (
               <span
                 key={tag}
-                className="rounded-full bg-accent/5 border border-accent/10 px-3 py-1 text-xs font-mono text-accent/70"
+                className="border border-white/5 bg-surface-light px-2.5 py-0.5 text-xs font-mono text-zinc-500"
               >
                 {tag}
               </span>
@@ -138,17 +138,16 @@ export default function Projects() {
   return (
     <SectionWrapper id="projects">
       <RevealOnScroll>
-        <div className="mb-16 text-center">
-          <span className="mb-3 inline-block font-mono text-xs text-accent tracking-widest uppercase">
+        <div className="mb-16">
+          <span className="mb-3 inline-block font-pixel text-xs text-accent tracking-widest uppercase">
             // Projects
           </span>
-          <h2 className="text-4xl font-bold text-white md:text-5xl">
-            Things I've{" "}
-            <span className="text-gradient">built</span>
+          <h2 className="text-4xl font-bold text-white md:text-5xl tracking-tight">
+            Things I've <span className="text-gradient">built</span>
           </h2>
-          <p className="mt-4 text-zinc-500 max-w-lg mx-auto">
-            A collection of projects that showcase my skills in full-stack
-            development, system design, and creative problem-solving.
+          <p className="mt-4 text-zinc-500 max-w-xl">
+            A collection of projects showcasing full-stack development,
+            system design, and creative problem-solving.
           </p>
         </div>
       </RevealOnScroll>

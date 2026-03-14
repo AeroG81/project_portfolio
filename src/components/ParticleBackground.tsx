@@ -27,46 +27,55 @@ export default function ParticleBackground() {
           events: {
             onHover: {
               enable: true,
-              mode: "repulse",
+              mode: ["grab", "bubble"],
             },
-            onClick: {
-              enable: true,
-              mode: "push",
-            },
+            // onClick: {
+            //   enable: true,
+            //   mode: "push",
+            // },
           },
           modes: {
-            repulse: {
-              distance: 100,
-              duration: 0.4,
+            grab: {
+              distance: 140,
+              links: {
+                opacity: 0.5,
+                color: "#ff4500",
+              },
+            },
+            bubble: {
+              distance: 200,
+              size: 4,
+              duration: 2,
+              opacity: 0.8,
             },
             push: {
-              quantity: 2,
+              quantity: 3,
             },
           },
         },
         particles: {
           color: {
-            value: ["#ff4500", "#ff7b00", "#3a3a3a"], // Cyber-amber/slate colors
+            value: ["#ff4500", "#ff7b00", "#e2e8f0", "#3a3a3a"], // Cyber-amber/slate colors
           },
           links: {
             color: "#ff4500",
-            distance: 140,
+            distance: 150,
             enable: true,
-            opacity: 0.1,
+            opacity: 0.15,
             width: 1,
             triangles: {
               enable: true,
-              opacity: 0.02
+              opacity: 0.03
             }
           },
           move: {
             enable: true,
-            speed: 0.6,
+            speed: { min: 0.2, max: 0.8 },
             direction: "none",
-            random: false,
+            random: true,
             straight: false,
             outModes: {
-              default: "out",
+              default: "bounce",
             },
           },
           number: {
@@ -75,21 +84,26 @@ export default function ParticleBackground() {
               width: 1920,
               height: 1080,
             },
-            value: 45,
+            value: 80,
           },
           opacity: {
-            value: { min: 0.1, max: 0.3 },
+            value: { min: 0.1, max: 0.5 },
             animation: {
               enable: true,
-              speed: 0.5,
+              speed: 0.3,
               sync: false,
             },
           },
           shape: {
-            type: "triangle",
+            type: ["triangle", "circle"],
           },
           size: {
-            value: { min: 1, max: 2 },
+            value: { min: 1, max: 2.5 },
+            animation: {
+              enable: true,
+              speed: 0.3,
+              sync: false,
+            },
           },
         },
         detectRetina: true,
